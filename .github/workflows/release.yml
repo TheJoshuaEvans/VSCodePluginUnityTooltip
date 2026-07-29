@@ -14,15 +14,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
       # Always run tests since main is excluded from the regular test regime
       - run: npm ci
-        if: steps.check-version.outputs.should_release == 'true'
-
       - run: xvfb-run -a npm test
-        if: steps.check-version.outputs.should_release == 'true'
-
       - run: npx vsce package
-        if: steps.check-version.outputs.should_release == 'true'
 
       # Whether this push actually bumped package.json's version is the
       # trigger for everything below - most pushes to main won't have, and
@@ -40,11 +39,6 @@ jobs:
             echo "should_release=true" >> "$GITHUB_OUTPUT"
             echo "tag=$tag" >> "$GITHUB_OUTPUT"
           fi
-
-      - uses: actions/setup-node@v7
-        if: steps.check-version.outputs.should_release == 'true'
-        with:
-          node-version-file: .nvmrc
 
       # Tagging and releasing happen in the same job/run that detected the
       # version bump, rather than a separate workflow triggered by the tag
