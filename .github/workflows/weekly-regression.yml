@@ -15,4 +15,4 @@ jobs:
           node-version-file: .nvmrc
       - run: npm ci
       - run: xvfb-run -a npm test
-      - run: npx vsce package
+      - run: npm run package

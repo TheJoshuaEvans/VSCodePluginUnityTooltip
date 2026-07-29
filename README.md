@@ -9,7 +9,7 @@ A VS Code extension that shows a Unity field's `[Tooltip("...")]` attribute text
 
 ## Installation
 
-Not yet on the VS Code Marketplace (planned - see [Status](#status)). For now:
+To install directly:
 
 1. Download the `.vsix` from the [latest release](https://github.com/TheJoshuaEvans/VSCodePluginUnityTooltip/releases/latest).
 2. Install it: `code --install-extension path/to/vscode-unity-tooltip-hover-*.vsix` (or use the Extensions view's "Install from VSIX..." command).
@@ -57,7 +57,7 @@ Press F5 to launch an Extension Development Host with the extension loaded live.
 
 ## Status
 
-Feature-complete and working end-to-end, verified against a real Unity project - not just passing tests. Ships via GitHub Releases; a Marketplace listing is planned but not yet published. A CI pipeline (lint + both test tiers + package) runs on every pull request, and a release pipeline tags and publishes a downloadable `.vsix` automatically whenever `package.json`'s version changes on `main`.
+Feature-complete and working end-to-end, verified against a real Unity project - not just passing tests. Ships via GitHub Releases; and is manually uploaded to the Marketplace. A CI pipeline (lint + both test tiers + package) runs on every pull request, and a release pipeline tags and publishes a downloadable `.vsix` automatically whenever `package.json`'s version changes on `main`.
 
 ## License
 

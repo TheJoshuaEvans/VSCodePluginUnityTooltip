@@ -2,13 +2,29 @@
   "name": "vscode-unity-tooltip-hover",
   "displayName": "Unity Tooltip Hover",
   "description": "Shows a Unity field's [Tooltip(\"...\")] attribute text as IDE hover documentation.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "thejoshuaevans",
+  "icon": "media/icon.png",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/TheJoshuaEvans/VSCodePluginUnityTooltip.git"
   },
+  "bugs": {
+    "url": "https://github.com/TheJoshuaEvans/VSCodePluginUnityTooltip/issues"
+  },
+  "homepage": "https://github.com/TheJoshuaEvans/VSCodePluginUnityTooltip#readme",
+  "galleryBanner": {
+    "color": "#1E1E1E",
+    "theme": "dark"
+  },
+  "keywords": [
+    "unity",
+    "csharp",
+    "tooltip",
+    "hover",
+    "serializefield"
+  ],
   "private": true,
   "type": "module",
   "engines": {
@@ -31,7 +47,8 @@
     "pretest:integration": "npm run compile",
     "test:integration": "vscode-test",
     "pretest": "npm run lint",
-    "test": "npm run test:unit && npm run test:integration"
+    "test": "npm run test:unit && npm run test:integration",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",

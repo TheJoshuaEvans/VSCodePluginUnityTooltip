@@ -21,7 +21,7 @@ jobs:
       # Always run tests since main is excluded from the regular test regime
       - run: npm ci
       - run: xvfb-run -a npm test
-      - run: npx vsce package
+      - run: npm run package
 
       # Whether this push actually bumped package.json's version is the
       # trigger for everything below - most pushes to main won't have, and
