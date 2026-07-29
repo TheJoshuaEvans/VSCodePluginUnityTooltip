@@ -5,7 +5,7 @@
 
 A VS Code extension that shows a Unity field's `[Tooltip("...")]` attribute text as IDE hover documentation.
 
-![Hovering a `[Tooltip]`-annotated field shows its text as hover documentation, distinct from the generic "Unity Serialized Field" hover VS Code's official Unity extension already provides](media/hover-demo.png)
+![Hovering a Tooltip-annotated field shows its text as hover documentation, distinct from the generic "Unity Serialized Field" hover VS Code's official Unity extension already provides](media/hover-demo.png)
 
 ## Installation
 
