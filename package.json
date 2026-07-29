@@ -4,6 +4,11 @@
   "description": "Shows a Unity field's [Tooltip(\"...\")] attribute text as IDE hover documentation.",
   "version": "0.0.1",
   "publisher": "thejoshuaevans",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheJoshuaEvans/VSCodePluginUnityTooltip.git"
+  },
   "private": true,
   "type": "module",
   "engines": {

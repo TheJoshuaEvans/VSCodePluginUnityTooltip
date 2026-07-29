@@ -1,0 +1,68 @@
+name: Tag and Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Whether this push actually bumped package.json's version is the
+      # trigger for everything below - most pushes to main won't have, and
+      # this is what lets the job no-op for those instead of re-releasing.
+      - name: Check whether package.json's version is already tagged
+        id: check-version
+        run: |
+          pkg_version="$(node -p "require('./package.json').version")"
+          tag="v$pkg_version"
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "already tagged as $tag - nothing to release"
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new version $pkg_version - will tag and release as $tag"
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+            echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.check-version.outputs.should_release == 'true'
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm ci
+        if: steps.check-version.outputs.should_release == 'true'
+
+      - run: xvfb-run -a npm test
+        if: steps.check-version.outputs.should_release == 'true'
+
+      - run: npx vsce package
+        if: steps.check-version.outputs.should_release == 'true'
+
+      # Tagging and releasing happen in the same job/run that detected the
+      # version bump, rather than a separate workflow triggered by the tag
+      # push - GitHub deliberately does not let a push made with the default
+      # GITHUB_TOKEN trigger other workflows (loop prevention), so a
+      # tag-push-triggered second workflow would silently never have fired.
+      #
+      # Marketplace/Open VSX publishing isn't set up yet (needs a publisher
+      # account + secrets) - this just gets a downloadable .vsix onto a
+      # GitHub Release, and is where a `vsce publish`/`ovsx publish` step
+      # gets added once that's ready.
+      - name: Tag and create the GitHub Release
+        if: steps.check-version.outputs.should_release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ steps.check-version.outputs.tag }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "$tag"
+          git push origin "$tag"
+          gh release create "$tag" *.vsix --generate-notes
