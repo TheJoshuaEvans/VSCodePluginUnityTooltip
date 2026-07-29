@@ -1,0 +1,44 @@
+{
+  "name": "vscode-unity-tooltip-hover",
+  "displayName": "Unity Tooltip Hover",
+  "description": "Shows a Unity field's [Tooltip(\"...\")] attribute text as IDE hover documentation.",
+  "version": "0.0.1",
+  "publisher": "thejoshuaevans",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:csharp"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {},
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -p ./ -w",
+    "lint": "oxlint src",
+    "lint:fix": "oxlint src --fix",
+    "test:unit": "node --test src/core/**/*.test.ts",
+    "pretest:integration": "npm run compile",
+    "test:integration": "vscode-test",
+    "pretest": "npm run lint",
+    "test": "npm run test:unit && npm run test:integration"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "26.1.2",
+    "@types/vscode": "1.125.0",
+    "@vscode/test-cli": "0.0.15",
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "^3.9.2",
+    "oxlint": "^1.76.0",
+    "typescript": "7.0.2"
+  },
+  "dependencies": {
+    "@vscode/tree-sitter-wasm": "0.3.1"
+  }
+}

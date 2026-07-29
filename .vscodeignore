@@ -1,0 +1,11 @@
+.vscode/**
+.vscode-test/**
+.oxlintrc.json
+.vscode-test.mjs
+.nvmrc
+.gitignore
+tsconfig.json
+src/**
+out/test/**
+out/**/*.test.js
+out/**/*.test.js.map

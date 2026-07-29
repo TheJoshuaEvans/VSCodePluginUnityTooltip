@@ -1,0 +1,9 @@
+{
+	"editor.formatOnSave": false,
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "never"
+	},
+	// TypeScript 7's package has no tsserver.js, so VS Code's "use workspace
+	// TypeScript version" would break IntelliSense - never offer that prompt.
+	"typescript.enablePromptUseWorkspaceTsdk": false
+}
