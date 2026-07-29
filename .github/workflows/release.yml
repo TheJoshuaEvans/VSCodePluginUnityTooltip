@@ -14,6 +14,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Always run tests since main is excluded from the regular test regime
+      - run: npm ci
+        if: steps.check-version.outputs.should_release == 'true'
+
+      - run: xvfb-run -a npm test
+        if: steps.check-version.outputs.should_release == 'true'
+
+      - run: npx vsce package
+        if: steps.check-version.outputs.should_release == 'true'
+
       # Whether this push actually bumped package.json's version is the
       # trigger for everything below - most pushes to main won't have, and
       # this is what lets the job no-op for those instead of re-releasing.
@@ -35,15 +45,6 @@ jobs:
         if: steps.check-version.outputs.should_release == 'true'
         with:
           node-version-file: .nvmrc
-
-      - run: npm ci
-        if: steps.check-version.outputs.should_release == 'true'
-
-      - run: xvfb-run -a npm test
-        if: steps.check-version.outputs.should_release == 'true'
-
-      - run: npx vsce package
-        if: steps.check-version.outputs.should_release == 'true'
 
       # Tagging and releasing happen in the same job/run that detected the
       # version bump, rather than a separate workflow triggered by the tag
